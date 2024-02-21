@@ -1110,7 +1110,7 @@ PODS:
     - React-jsi (= 0.73.4)
     - React-logger (= 0.73.4)
     - React-perflogger (= 0.73.4)
-  - RNFBApp (17.4.0):
+  - RNFBApp (17.5.0):
     - Firebase/CoreOnly (= 10.7.0)
     - React-Core
   - RNFBAuth (17.4.0):
@@ -1383,7 +1383,7 @@ SPEC CHECKSUMS:
   React-runtimescheduler: 1c054b58fef2ce74cdcbdcd70db190e10f56a617
   React-utils: 21a798438d45e70ed9c2e2fe0894ee32ba7b7c5b
   ReactCommon: dcc65c813041388dead6c8b477444757425ce961
-  RNFBApp: 525cc4317f7955eda6bac09fac3acf7ee06afa0b
+  RNFBApp: 0d8bf86673bbad0524d1ceac3944d71ccf48a0e4
   RNFBAuth: 57e0173a5cc9e63201bfe9379ef89f3ece5d923d
   RNFBDatabase: d7dff29d2a9a0e1a8da27841f20dc6b1122a6454
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17

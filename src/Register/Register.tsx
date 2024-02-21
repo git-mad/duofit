@@ -27,8 +27,8 @@ export const Register = () => {
 
   return (
     <View>
-      <TextInput placeholder="Email" onChangeText={(text) => setEmail(text)} />
-      <TextInput placeholder="Password" onChangeText={(text) => setPassword(text)} />
+      <TextInput placeholder="email" onChangeText={(text) => setEmail(text)} />
+      <TextInput placeholder="password" onChangeText={(text) => setPassword(text)} />
       <Button title="Register" onPress={register} />
     </View>
   )
