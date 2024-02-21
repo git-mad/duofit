@@ -10,9 +10,9 @@ to run tests: `yarn test`
 
 to run: `yarn ios` or `yarn android`
 
-> 👍 Success
+> ⚠️ Warning
 > 
-> Vitae reprehenderit at aliquid error voluptates eum dignissimos.
+> React Native Firebase disables expo go, you must run a development build with `yarn ios` or `yarn android` 
 
 ## commit messages
 
