@@ -10,10 +10,7 @@
     "target": "es5",
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "strict": true,
+    "strict": true
   },
-  "include": [
-    "**/*.ts",
-    "**/*.tsx"
-, "App.js"  ]
+  "include": ["**/*.ts", "**/*.tsx", "App.js"]
 }
