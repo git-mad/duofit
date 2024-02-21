@@ -11,7 +11,10 @@
     "check-typescript": "tsc --noEmit",
     "check-eslint": "eslint './src/**/*{js,ts,jsx,tsx}'",
     "lint": "yarn check-typescript && yarn check-eslint",
-    "test": "jest"
+    "test": "jest",
+    "release": "standard-version",
+    "prepare": "husky install",
+    "postinstall": "husky install"
   },
   "dependencies": {
     "@react-native-firebase/app": "17.4.0",
@@ -31,6 +34,8 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
+    "@commitlint/cli": "^18.6.1",
+    "@commitlint/config-conventional": "^18.6.2",
     "@testing-library/dom": "^9.3.4",
     "@testing-library/jest-native": "^5.4.3",
     "@testing-library/react-native": "^12.4.3",
@@ -47,8 +52,17 @@
     "eslint-plugin-prettier": "5.0.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-testing-library": "^6.2.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^15.2.2",
     "prettier": "^3.2.5",
+    "standard-version": "^9.5.0",
     "typescript": "^5.1.3"
   },
-  "private": true
+  "private": true,
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx}": [
+      "eslint './src/**/*{js,ts,jsx,tsx}' --fix",
+      "prettier --write './src/**/*{js,ts,jsx,tsx}'"
+    ]
+  }
 }
