@@ -8,7 +8,11 @@ to run linter: `yarn lint`
 
 to run tests: `yarn test`
 
-to run: `yarn start`
+to run: `yarn ios` or `yarn android`
+
+> 👍 Success
+> 
+> Vitae reprehenderit at aliquid error voluptates eum dignissimos.
 
 ## commit messages
 
