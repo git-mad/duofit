@@ -1,14 +1,17 @@
 # duofit
 
-when you first clone, use `npm ci` instead of `npm install` to install the expo dependencies (i think)
+0. `git clone xxxx`
+1. `cd duofit`
+2. when you first clone, use `npm ci` instead of `npm install` to install the expo dependencies (i think)
 
-then...
+3. then...
+4. to run linter: `yarn lint`
+5. to run tests: `yarn test`
+6. to run: `yarn ios` or `yarn android`
 
-to run linter: `yarn lint`
-
-to run tests: `yarn test`
-
-to run: `yarn start`
+> ⚠️ Warning
+> 
+> React Native Firebase disables expo go, you must run a development build with `yarn ios` or `yarn android`  (I think, expo go could still work on android).
 
 ## commit messages
 
