@@ -11,7 +11,6 @@
     "check-typescript": "tsc --noEmit",
     "check-eslint": "eslint './src/**/*{js,ts,jsx,tsx}'",
     "lint": "yarn check-typescript && yarn check-eslint",
-    "test": "jest",
     "release": "standard-version",
     "prepare": "husky install",
     "postinstall": "husky install"
