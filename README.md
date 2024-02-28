@@ -5,9 +5,7 @@
 2. when you first clone, use `npm ci` instead of `npm install` to install the expo dependencies (i think)
 
 3. then...
-4. to run linter: `yarn lint`
-5. to run tests: `yarn test`
-6. to run: `yarn ios` or `yarn android`
+4. `npm start`
 
 > ⚠️ Warning
 > 
