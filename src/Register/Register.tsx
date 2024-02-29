@@ -1,5 +1,7 @@
 import { createUserWithEmailAndPassword } from 'firebase/auth'
+
 import React, { useState } from 'react'
+
 import { Button, TextInput, View } from 'react-native'
 
 import { auth } from '../../firebaseConfig'
@@ -27,14 +29,14 @@ export const Register = () => {
   return (
     <View>
       <TextInput
-        placeholder="email"
+        placeholder="email goes here"
         autoCapitalize="none"
         onChangeText={(text) => setEmail(text)}
       />
       <TextInput
         autoCapitalize="none"
         secureTextEntry={true}
-        placeholder="password"
+        placeholder="password is here!"
         onChangeText={(text) => setPassword(text)}
       />
       <Button title="Register" onPress={register} />
