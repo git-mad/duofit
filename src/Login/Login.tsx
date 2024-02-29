@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native'
 import { auth } from '../../firebaseConfig'
 import { signInWithEmailAndPassword } from 'firebase/auth'
+import { StackActions } from '@react-navigation/native'
 
 export const Login = ({ navigation }: any) => {
   const [email, setEmail] = useState('')
@@ -12,13 +13,14 @@ export const Login = ({ navigation }: any) => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         setPasswordError('')
-        console.log('User account created & signed in!')
+        auth.updateCurrentUser(userCredential.user)
+        console.log('User signed in!')
         console.log(userCredential.user.email)
         console.log(userCredential.user.uid)
       })
       .catch((error) => {
         if (
-          ['auth/invalid-email', 'auth/wrong-password', 'auth/user-not-found'].includes(error.code)
+          ['auth/invalid-email', 'auth/wrong-password', 'auth/user-not-found', 'auth/missing-password'].includes(error.code)
         ) {
           setPasswordError('The credentials you provided are incorrect.')
         } else {
@@ -27,7 +29,6 @@ export const Login = ({ navigation }: any) => {
         console.error(error)
       })
   }
-
   return (
     <View style={styles.container}>
       <View
