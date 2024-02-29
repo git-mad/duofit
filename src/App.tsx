@@ -10,8 +10,6 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 import { auth } from '../firebaseConfig'
-import { signInWithEmailAndPassword } from 'firebase/auth'
-import { StackActions } from '@react-navigation/native'
 import { useEffect, useState } from 'react'
 
 const Stack = createNativeStackNavigator()
