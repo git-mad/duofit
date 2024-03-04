@@ -4,7 +4,7 @@ import { Register } from './Register/Register'
 import { Splash } from './Splash/Splash'
 import { Login } from './Login/Login'
 import { Landing } from './Main/Landing'
-import { Profile } from './Main/Profile/Profile'
+import { ProfileEdit } from './Main//ProfileEdit/ProfileEdit'
 
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { NavigationContainer } from '@react-navigation/native'
@@ -12,6 +12,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 import { auth } from '../firebaseConfig'
 import { useEffect, useState } from 'react'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import { ProfileView } from './Main/Home/ProfileView'
+import { HomeScreen } from './Main/Home/Home'
 
 const Stack = createNativeStackNavigator()
 
@@ -27,24 +30,27 @@ export default function App() {
   }, []);
   
   return (
-    <SafeAreaProvider style={styles.container}>
-      <NavigationContainer>
-        <Stack.Navigator>
-          {!isSignedIn ? (
-            <>
-              <Stack.Screen name="splash" component={SplashScreen} options={{ headerShown: false }} />
-              <Stack.Screen name="register" component={RegisterScreen} options={{ headerShown: false }} />
-              <Stack.Screen name="login" component={LoginScreen} options={{ headerShown: false }} />
-            </> 
-            ) : (
+    <GestureHandlerRootView style={styles.container}>
+      <SafeAreaProvider style={styles.container}>
+        <NavigationContainer>
+          <Stack.Navigator>
+            {!isSignedIn ? (
               <>
-              <Stack.Screen name="landing" component={LandingScreen} options={{ headerShown: false }} />
-              <Stack.Screen name="profile" component={ProfileScreen} options={{ headerShown: true, headerTitle: "My Profile", headerBackTitle: "Back"}} />
-              </>
-            )}
-        </Stack.Navigator>
-      </NavigationContainer>
-    </SafeAreaProvider>
+                <Stack.Screen name="splash" component={SplashScreen} options={{ headerShown: false }} />
+                <Stack.Screen name="register" component={RegisterScreen} options={{ headerShown: false }} />
+                <Stack.Screen name="login" component={LoginScreen} options={{ headerShown: false }} />
+              </> 
+              ) : (
+                <>
+                <Stack.Screen name="landing" component={LandingScreen} options={{ headerShown: false }} />
+                <Stack.Screen name="profile" component={ProfileEditScreen} options={{ headerShown: true, headerTitle: "My Profile", headerBackTitle: "Back"}} />
+                <Stack.Screen name="profileview" component={ProfileViewScreen} options={{ headerShown: true, headerBackTitle: "Back"}} />
+                </>
+              )}
+          </Stack.Navigator>
+        </NavigationContainer>
+      </SafeAreaProvider>
+    </GestureHandlerRootView>
   )
 }
 
@@ -80,10 +86,18 @@ const LandingScreen = ({ navigation }: { navigation: any }) => {
   )
 }
 
-const ProfileScreen = ({ navigation }: { navigation: any }) => {
+const ProfileEditScreen = ({ navigation }: { navigation: any }) => {
   return (
     <View style={styles.container}>
-      <Profile />
+      <ProfileEdit />
+    </View>
+  )
+}
+
+const ProfileViewScreen = ({ navigation }: { navigation: any }) => {
+  return (
+    <View style={styles.container}>
+      <ProfileView navigation={navigation} />
     </View>
   )
 }

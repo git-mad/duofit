@@ -1,5 +1,6 @@
 import React from 'react'
 import { TouchableOpacity, StyleSheet, Text, View, Image } from 'react-native'
+import { scaleSize } from 'src/Main/components/util'
 
 export const Splash = ({ navigation }: any) => {
   return (
@@ -42,7 +43,8 @@ const styles = StyleSheet.create({
     height: '15%'
   },
   splashtext: {
-    color: 'black'
+    color: 'black',
+    fontSize: scaleSize(15),
   },
   signup: {
     backgroundColor: 'white',
@@ -53,7 +55,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: 'bold',
     padding: '2%',
-    fontSize: 33,
+    fontSize: scaleSize(33),
     marginTop: '10%',
     overflow: 'hidden'
   },
@@ -66,7 +68,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: 'bold',
     padding: '2%',
-    fontSize: 33,
+    fontSize: scaleSize(33),
     marginTop: '10%',
     overflow: 'hidden'
   }

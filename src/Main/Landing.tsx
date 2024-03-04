@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { TouchableOpacity, StyleSheet, Text, View, Image, Button } from 'react-native'
 import { auth } from '../../firebaseConfig'
 import { signInWithEmailAndPassword } from 'firebase/auth'
-import { NavigationContainer, StackActions } from '@react-navigation/native'
+import { NavigationContainer, StackActions, useNavigation} from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { HomeScreen } from './Home/Home'
@@ -10,12 +10,11 @@ import { MessagesScreen } from './Messages/Messages'
 import { DuoScreen } from './Duo/Duo'
 import { scaleSize } from './components/util'
 
-
 const Tab = createBottomTabNavigator();
-var _navigation;
+var _navigation: any;
 
 export const Landing = ({ navigation }: any) => {
-  _navigation = navigation;
+  _navigation = useNavigation();
     return (
       <NavigationContainer
       independent={true}>
@@ -31,6 +30,7 @@ function Tabs() {
       <Tab.Screen         
         name="Home"
         component={HomeScreen}
+        initialParams={{_navigation}}
         options={{
         tabBarLabel: 'Home',
         tabBarIcon: ({ color, size }) => (

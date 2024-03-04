@@ -1,16 +1,17 @@
 import { View, Text, Button, TouchableOpacity, StyleSheet, Image} from "react-native";
 import { scaleSize } from "./util";
+import { DocumentData } from "firebase/firestore";
+import { MaterialIcons } from '@expo/vector-icons';
 
 interface ProfileButtonProps{
-    name: String,
-    interests: String,
-    days: String[]
-    profilePicture?: String
+    user: DocumentData
+    profilePicture?: string
+    onClick: () => void
 }
-export const ProfileButton: React.FC<ProfileButtonProps> = ({name, interests, days, profilePicture}) => {
+export const ProfileButton: React.FC<ProfileButtonProps> = ({user, profilePicture, onClick}) => {
     const imgSrc = profilePicture ? {uri: profilePicture} : require('./assets/defaultprofile.png')
     return (
-        <TouchableOpacity style={styles.ProfileButtonStyle}>
+        <TouchableOpacity style={styles.ProfileButtonStyle} onPress={() => onClick()}>
             <Image 
                 source={imgSrc} 
                 style={styles.ProfilePicture}
@@ -23,16 +24,23 @@ export const ProfileButton: React.FC<ProfileButtonProps> = ({name, interests, da
                 }
             }>
             <Text style={{marginLeft: 16}}>
-                <Text style={days.includes("Su") ? styles.ProfileDOWActive : styles.ProfileDOWInactive}>Su </Text>
-                <Text style={days.includes("M") ? styles.ProfileDOWActive : styles.ProfileDOWInactive}>M </Text>
-                <Text style={days.includes("T") ? styles.ProfileDOWActive : styles.ProfileDOWInactive}>T </Text>
-                <Text style={days.includes("W") ? styles.ProfileDOWActive : styles.ProfileDOWInactive}>W </Text>
-                <Text style={days.includes("Th") ? styles.ProfileDOWActive : styles.ProfileDOWInactive}>Th </Text>
-                <Text style={days.includes("F") ? styles.ProfileDOWActive : styles.ProfileDOWInactive}>F </Text>
-                <Text style={days.includes("Sa") ? styles.ProfileDOWActive : styles.ProfileDOWInactive}>Sa </Text>
+                <Text style={user.days.includes("Su") ? styles.ProfileDOWActive : styles.ProfileDOWInactive}>Su </Text>
+                <Text style={user.days.includes("M") ? styles.ProfileDOWActive : styles.ProfileDOWInactive}>M </Text>
+                <Text style={user.days.includes("T") ? styles.ProfileDOWActive : styles.ProfileDOWInactive}>T </Text>
+                <Text style={user.days.includes("W") ? styles.ProfileDOWActive : styles.ProfileDOWInactive}>W </Text>
+                <Text style={user.days.includes("Th") ? styles.ProfileDOWActive : styles.ProfileDOWInactive}>Th </Text>
+                <Text style={user.days.includes("F") ? styles.ProfileDOWActive : styles.ProfileDOWInactive}>F </Text>
+                <Text style={user.days.includes("Sa") ? styles.ProfileDOWActive : styles.ProfileDOWInactive}>Sa </Text>
             </Text>
-            <Text style={styles.ProfileNameTextStyle}>{name != "" ? name : "undefined"}</Text>
-            <Text style={styles.ProfileInterestsTextStyle}>{interests != "" ? name : "undefined"}</Text>
+            <Text style={styles.ProfileNameTextStyle}>{user.name != "" ? user.name : "undefined"}</Text>
+            <View style={{
+                flexDirection: 'row',
+                alignContent: 'center',
+                alignItems: 'center',
+            }}>
+                <MaterialIcons name="location-pin" size={scaleSize(16)} color="black" key={"location-pin"} style={{marginLeft: scaleSize(16)}}/>
+                <Text style={styles.ProfileInterestsTextStyle}>{user.location? user.location : "undefined"}</Text>
+            </View>
             </View>
         </TouchableOpacity>
     );
@@ -87,6 +95,5 @@ const styles = StyleSheet.create({
     ProfileInterestsTextStyle: {
         fontSize: scaleSize(16),
         color: 'black',
-        marginLeft: 16,
     },
 })

@@ -1,11 +1,11 @@
 import React, { Component, useEffect, useState } from 'react';
 import { db, auth } from "firebaseConfig";
-import { View, Text, ActivityIndicator, Image, TouchableOpacity, Alert, ScrollView, TextInput } from "react-native";
+import { View, Text, ActivityIndicator, Image, TouchableOpacity, Alert, ScrollView, TextInput, ActionSheetIOS, Platform } from "react-native";
 import 'firebase/database';
 import { doc, getDoc, setDoc, DocumentData } from "firebase/firestore";
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { scaleSize } from '../components/util';
-
+import { Picker } from '@react-native-picker/picker';
 const allInterests: { [key: string]: string } = {
     "Weightlifting": "🏋️",
     "Bodybuilding": "💪",
@@ -15,26 +15,30 @@ const allInterests: { [key: string]: string } = {
     "Sports": "🏈"
 };
 
+function checkIfIOS() {
+    return Platform.OS === 'ios';
+}
 
-export function Profile() {
+export function ProfileEdit(this: any) {
     const [interests, setInterests] =  useState<string[]>([]);
-    const [name, setName] = useState('');
-    const [bio, setBio] = useState('');
+    const [name, setName] = useState("");
+    const [bio, setBio] = useState("");
     const [days, setDays] = useState<string[]>([]);
     const [loading, setLoading] = useState(true);
+    const [location, setLocation] = useState("");
 
     const appendInterests = (interest: string) => {
         let newInterests = interests.includes(interest) ? 
             interests.filter(item => item !== interest) : 
             [...interests, interest];
         setInterests(newInterests);
-        onSettingChange(newInterests, days, bio); // Pass the updated interests
+        onSettingChange(newInterests, days, bio, location); // Pass the updated interests
     }
     
     const removeInterest = (interest: string) => {
         let newInterests = interests.filter(item => item !== interest);
         setInterests(newInterests);
-        onSettingChange(newInterests, days, bio); // Pass the updated interests
+        onSettingChange(newInterests, days, bio, location); // Pass the updated interests
     }
     
     const appendDays = (day: string) => {
@@ -42,17 +46,22 @@ export function Profile() {
             days.filter(item => item !== day) : 
             [...days, day];
         setDays(newDays);
-        onSettingChange(interests, newDays, bio); // Pass the updated days
+        onSettingChange(interests, newDays, bio, location); // Pass the updated days
     }
     
     const removeDay = (day: string) => {
         let newDays = days.filter(item => item !== day);
         setDays(newDays);
-        onSettingChange(interests, newDays, bio); // Pass the updated days
+        onSettingChange(interests, newDays, bio, location); // Pass the updated days
     }
     const changeBio = (newBio: string) => {
         setBio(newBio);
-        onSettingChange(interests, days, newBio); // Pass the updated bio
+        onSettingChange(interests, days, newBio, location); // Pass the updated bio
+    }
+
+    const changeLocation = (newLocation: string) => {
+        setLocation(newLocation);
+        onSettingChange(interests, days, bio, newLocation); // Pass the updated location
     }
 
     const onInterestButtonClick = (interest: string) => {
@@ -70,13 +79,14 @@ export function Profile() {
             appendDays(day);
         }
     }
-    const onSettingChange = (currentInterests: string[], currentDays: string[], currentBio: string) => {
-        const docRef = doc(db, "users", "auth.currentUser!.uid");
+    const onSettingChange = (currentInterests: string[], currentDays: string[], currentBio: string, currentLocation: string) => {
+        const docRef = doc(db, "users", auth.currentUser!.uid);
         const data = {
           name: name,
           interests: currentInterests,
           days: currentDays,
-          bio: currentBio
+          bio: currentBio ? currentBio : "",
+          location: currentLocation ? currentLocation : ""
         }
         setDoc(docRef, data);
       }
@@ -92,6 +102,7 @@ export function Profile() {
             setName(data.name);
             setDays(data.days);
             setBio(data.bio);
+            setLocation(data.location);
         } else {
           // handle the case where the document does not exist
         }
@@ -153,7 +164,7 @@ export function Profile() {
                 alignContent: 'flex-start',
                 alignItems: 'flex-start',
             }}>
-                <Text style={{fontSize: scaleSize(18), textAlign: 'left', fontWeight: 'bold', marginTop: 8}}>Your Bio</Text>
+                <Text style={{fontSize: scaleSize(18), textAlign: 'left', fontWeight: 'bold', marginTop: scaleSize(8)}}>Your Bio</Text>
                 <Text style={{fontSize: scaleSize(12), textAlign: 'left' }}>Tell the world about yourself!</Text>
                 <TextInput
                     style={{
@@ -164,8 +175,8 @@ export function Profile() {
                         borderWidth: 1,
                         borderRadius: 10,
                         padding: '2%',
-                        marginBottom: 16,
-                        marginTop: 8,
+                        marginBottom: scaleSize(16),
+                        marginTop: scaleSize(8),
                         fontSize: scaleSize(14),
                     }}
                     multiline={true}
@@ -180,14 +191,14 @@ export function Profile() {
                 alignContent: 'flex-start',
                 alignItems: 'flex-start',
             }}>
-                <Text style={{fontSize: scaleSize(18), textAlign: 'left', fontWeight: 'bold', marginTop: 8}}>Your Interests</Text>
+                <Text style={{fontSize: scaleSize(18), textAlign: 'left', fontWeight: 'bold', marginTop: scaleSize(8)}}>Your Interests</Text>
                 <Text style={{fontSize: scaleSize(12), textAlign: 'left' }}>Select your favorite activities</Text>
             </View>
             <View
             style={{
                 flexDirection: 'row',
                 justifyContent: 'center',
-                marginTop: 8
+                marginTop: scaleSize(8)
             }}>
                 <InterestButton icon="🏋️" interest="Weightlifting" checked={interests.includes("Weightlifting")} onClick={onInterestButtonClick}/>
                 <InterestButton icon="💪" interest="Bodybuilding"  checked={interests.includes("Bodybuilding")} onClick={onInterestButtonClick}/>
@@ -197,8 +208,8 @@ export function Profile() {
                 style={{
                     flexDirection: 'row',
                     justifyContent: 'center',
-                    marginTop: 8,
-                    marginBottom: 16
+                    marginTop: scaleSize(8),
+                    marginBottom: scaleSize(16)
                 }}>
                 <InterestButton icon="🤸" interest="Calisthenics" checked={interests.includes("Calisthenics")} onClick={onInterestButtonClick}/>
                 <InterestButton icon="🏊" interest="Swimming" checked={interests.includes("Swimming")} onClick={onInterestButtonClick}/>
@@ -209,10 +220,19 @@ export function Profile() {
                 alignContent: 'flex-start',
                 alignItems: 'flex-start',
             }}>
-                <Text style={{fontSize: scaleSize(18), textAlign: 'left', fontWeight: 'bold', marginTop: 8}}>Your Schedule</Text>
+                <Text style={{fontSize: scaleSize(18), textAlign: 'left', fontWeight: 'bold', marginTop: scaleSize(8)}}>Your Schedule</Text>
                 <Text style={{fontSize: scaleSize(12), textAlign: 'left' }}>Select your activity schedule</Text>
             </View>
             <DayOfWeekList dayList={days} onClick={onDayButtonClick}/>
+            <View style={{
+                justifyContent: 'flex-start',
+                alignContent: 'flex-start',
+                alignItems: 'flex-start'
+            }}>
+                <Text style={{fontSize: scaleSize(18), textAlign: 'left', fontWeight: 'bold', marginTop: scaleSize(8)}}>Your Location</Text>
+                <Text style={{fontSize: scaleSize(12), textAlign: 'left' }}>Select your main location</Text>
+            </View>
+            <LocationPicker onChange={changeLocation} currentLocation={location}/>
             <TouchableOpacity style={{ width: '100%' }} onPress={() => {
                 Alert.alert(
                     "Log Out",
@@ -257,11 +277,108 @@ export function Profile() {
 
 
 interface InterestButtonProps {
-    icon: String,
-    interest: String
+    icon: string,
+    interest: string
     checked?: boolean
     onClick: (interest: string) => void
 }
+
+interface LocationPickerProps {
+    onChange: (location: string) => void
+    currentLocation?: string
+}
+
+const LocationPicker = Platform.select({
+    ios: ({onChange, currentLocation}: LocationPickerProps) => {
+        return (
+                <TouchableOpacity style={{
+                    width: '100%',
+                    height: scaleSize(48),
+                    backgroundColor: 'white',
+                    borderColor: 'gainsboro',
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    padding: '2%',
+                    marginBottom: scaleSize(16),
+                    marginTop: scaleSize(8),
+                    justifyContent: 'center',
+                    alignContent: 'center',
+                    alignItems: 'center'
+                }} onPress={() => {
+                    ActionSheetIOS.showActionSheetWithOptions(
+                        {
+                            options: ["Cancel", "Georgia Tech CRC", "GT Connector", "North Avenue Gym", "LA Fitness", "Other"],
+                            cancelButtonIndex: 0,
+                        },
+                        (buttonIndex) => {
+                            if (buttonIndex === 0) {
+                                console.log("Cancel Pressed");
+                            } else if (buttonIndex === 1) {
+                                onChange("Georgia Tech CRC");
+                            } else if (buttonIndex === 2) {
+                                onChange("GT Connector");
+                            } else if (buttonIndex === 3) {
+                                onChange("North Avenue Gym");
+                            } else if (buttonIndex === 4) {
+                                onChange("LA Fitness");
+                            } else if (buttonIndex === 5) {
+                                onChange("Other");
+                            }
+                        }
+                    );
+                }}>
+                <View style={{
+                    flex: 1,
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center', // Adjust this to change vertical alignment
+                    minWidth: '100%',
+                }}>
+                    <View style={{
+                        flexDirection: 'row',
+                        alignContent: 'center',
+                        alignItems: 'center',
+                        marginLeft: 8,
+                        marginRight: 8
+                    }}>
+                        <MaterialIcons name="location-pin" size={scaleSize(16)} color="black" key={"location-pin"}/>
+                        <Text style={{fontSize: scaleSize(14)}}>{!currentLocation ? "Select your main location" : currentLocation}</Text>
+                    </View>
+                    <MaterialIcons name="arrow-drop-down" size={scaleSize(16)} color="black" key={"arrow-drop-down"}/>
+                </View>
+                </TouchableOpacity>
+        )
+    },
+    default: ({onChange, currentLocation}: LocationPickerProps) => {
+        return (
+        
+                <Picker
+                    selectedValue={currentLocation ? currentLocation : "Select your main location"}
+                    style={{
+                        width: '100%',
+                        height: scaleSize(48),
+                        backgroundColor: 'white',
+                        borderColor: 'gainsboro',
+                        borderWidth: 1,
+                        borderRadius: 10,
+                        padding: '2%',
+                        marginBottom: scaleSize(16),
+                        marginTop: scaleSize(8),
+                    }}
+                    id='locationPicker'
+                    onValueChange={(itemValue, itemIndex) =>
+                        onChange(itemValue)
+                    }>
+                    <Picker.Item label="Georgia Tech CRC" value="Georgia Tech CRC" />
+                    <Picker.Item label="GT Connector" value="GT Connector" />
+                    <Picker.Item label="North Avenue Gym" value="North Avenue Gym" />
+                    <Picker.Item label="LA Fitness" value="LA Fitness" />
+                    <Picker.Item label="Other" value="Other" />
+                </Picker>
+        )
+    }
+});
+
 
 const InterestButton: React.FC<InterestButtonProps> = ({icon, interest, checked, onClick}) => {
 return (
@@ -286,12 +403,14 @@ return (
     </View>
 )
 }
-const DayOfWeekList: React.FC<{dayList: String[], onClick: (day: string) => void}> = ({dayList, onClick}) => {
+
+const DayOfWeekList: React.FC<{dayList: string[], onClick: (day: string) => void}> = ({dayList, onClick}) => {
     return (
         <View style={{
             flexDirection: 'row',
             justifyContent: 'center',
-            marginTop: 8
+            marginTop: scaleSize(8),
+            marginBottom: scaleSize(16)
         }}>
             <DayOfWeekButton day="Su" checked={dayList.includes("Su")} onClick={onClick}/>
             <DayOfWeekButton day="M" checked={dayList.includes("M")} onClick={onClick}/>

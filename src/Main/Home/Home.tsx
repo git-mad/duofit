@@ -2,10 +2,13 @@ import { View, Text, Button, TouchableOpacity, StyleSheet, Image, FlatList, Refr
 import { ProfileButton } from "../components/ProfileButton";
 import {auth, db} from '../../../firebaseConfig'
 import { doc, getDoc, setDoc, DocumentData, collection, getDocs} from "firebase/firestore";
+import { useNavigation } from '@react-navigation/native';
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { scaleSize } from "../components/util";
 
-import { useCallback, useEffect, useState } from "react";
-
-export function HomeScreen() {
+var _navigation: any;
+export function HomeScreen(navigation: any) {
+    _navigation = useNavigation();
     return (
       <View style={{ flex: 1, alignItems: 'center', height: '100%', width: '100%' }}>
         <ProfilesList/>
@@ -16,6 +19,7 @@ export function HomeScreen() {
   const ProfilesList = () => {
     const [users, setUsers] = useState<DocumentData[]>([]);
     const [refreshing, setRefreshing] = useState(false);
+    const [showBottomSheet, setShowBottomSheet] = useState(false);
   
     const fetchUsers = async () => {
       const currentUser = auth.currentUser;
@@ -40,14 +44,13 @@ export function HomeScreen() {
     }, []);
   
     return (
-      <View style={{ height: "100%", width: "100%", marginLeft: 20 }}>
+      <View style={{ height: "100%", width: "100%", justifyContent: "center"}}>
         <FlatList
           data={users}
           renderItem={({ item }) => (
             <ProfileButton
-              name={item.name}
-              interests={item.interests}
-              days={item.days}
+              user={item}
+              onClick={() => {_navigation.navigate("profileview")}}
             />
           )}
           keyExtractor={(item, index) => index.toString()} // Add a key extractor for list items
@@ -57,11 +60,12 @@ export function HomeScreen() {
               onRefresh={onRefresh}
             />
           }
+          style={{ width: "100%", height: "100%"}}
+          contentContainerStyle={{ paddingStart: '5%', width: "100%", height: "100%"}}
         />
       </View>
     );
   };
-
 
 const styles = StyleSheet.create({
     container: {
