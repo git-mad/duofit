@@ -13,7 +13,7 @@ export const Splash = ({ navigation }: any) => {
           marginTop: '70%'
         }}
       >
-        <Text style={styles.splashtext}>Start your fitness journey today.</Text>
+        <Text style={styles.splashtext}>Start your fitness journey connected.</Text>
         <TouchableOpacity
           style={{
             width: '80%'

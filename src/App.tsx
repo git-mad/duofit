@@ -1,9 +1,10 @@
-import { StyleSheet, SafeAreaView } from 'react-native'
+import { StyleSheet, SafeAreaView, View } from 'react-native'
 
 import { Register } from './Register/Register'
 import { Splash } from './Splash/Splash'
 import { Login } from './Login/Login'
 import { Landing } from './Main/Landing'
+import { Profile } from './Main/Profile/Profile'
 
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { NavigationContainer } from '@react-navigation/native'
@@ -38,6 +39,7 @@ export default function App() {
             ) : (
               <>
               <Stack.Screen name="landing" component={LandingScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="profile" component={ProfileScreen} options={{ headerShown: true, headerTitle: "My Profile", headerBackTitle: "Back"}} />
               </>
             )}
         </Stack.Navigator>
@@ -72,9 +74,17 @@ const LoginScreen = ({ navigation }: { navigation: any }) => {
 
 const LandingScreen = ({ navigation }: { navigation: any }) => {
   return (
-    <SafeAreaView style={styles.container}>
-      <Landing />
-    </SafeAreaView>
+    <View style={styles.container}>
+      <Landing navigation={navigation} />
+    </View>
+  )
+}
+
+const ProfileScreen = ({ navigation }: { navigation: any }) => {
+  return (
+    <View style={styles.container}>
+      <Profile />
+    </View>
   )
 }
 

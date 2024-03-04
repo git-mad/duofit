@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native'
 import { auth } from '../../firebaseConfig'
 import { signInWithEmailAndPassword } from 'firebase/auth'
-import { StackActions } from '@react-navigation/native'
+import { scaleSize } from 'src/Main/components/util'
 
 export const Login = ({ navigation }: any) => {
   const [email, setEmail] = useState('')
@@ -20,7 +20,7 @@ export const Login = ({ navigation }: any) => {
       })
       .catch((error) => {
         if (
-          ['auth/invalid-email', 'auth/wrong-password', 'auth/user-not-found', 'auth/missing-password'].includes(error.code)
+          ['auth/invalid-email', 'auth/wrong-password', 'auth/user-not-found', 'auth/missing-password', 'auth/invalid_credential'].includes(error.code)
         ) {
           setPasswordError('The credentials you provided are incorrect.')
         } else {
@@ -41,7 +41,7 @@ export const Login = ({ navigation }: any) => {
       >
         <Text
           style={{
-            fontSize: 25,
+            fontSize: scaleSize(25),
             fontWeight: 'bold',
             marginTop: '10%'
           }}
@@ -50,7 +50,7 @@ export const Login = ({ navigation }: any) => {
         </Text>
         <Text
           style={{
-            fontSize: 15,
+            fontSize: scaleSize(15),
             color: 'grey',
             marginBottom: '7%'
           }}
@@ -71,7 +71,8 @@ export const Login = ({ navigation }: any) => {
             backgroundColor: 'lightgrey',
             borderRadius: 5,
             padding: '2%',
-            marginBottom: '4%'
+            marginBottom: '4%',
+            fontSize: scaleSize(16)
           }}
           placeholder="Email"
           autoCapitalize="none"
@@ -83,7 +84,8 @@ export const Login = ({ navigation }: any) => {
             backgroundColor: 'lightgrey',
             borderRadius: 5,
             padding: '2%',
-            marginBottom: '5%'
+            marginBottom: '5%',
+            fontSize: scaleSize(16)
           }}
           placeholder="Password"
           secureTextEntry={true}
@@ -107,7 +109,7 @@ export const Login = ({ navigation }: any) => {
           </TouchableOpacity>
         </View>
         <TouchableOpacity style={styles.login} onPress={() => login()}>
-          <Text style={{ color: 'white', fontSize: 20 }}>Log In</Text>
+          <Text style={{ color: 'white', fontSize: scaleSize(20) }}>Log In</Text>
         </TouchableOpacity>
         <Text
           style={{
@@ -142,7 +144,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: 'bold',
     padding: '2%',
-    fontSize: 33,
+    fontSize: scaleSize(33),
     marginTop: '5%',
     overflow: 'hidden'
   }
