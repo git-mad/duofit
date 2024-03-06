@@ -2752,25 +2752,13 @@
     prompts "^2.4.2"
     semver "^7.5.2"
 
-"@react-native-firebase/app@^17.5.0", "@react-native-firebase/app@17.5.0":
-  version "17.5.0"
-  resolved "https://registry.npmjs.org/@react-native-firebase/app/-/app-17.5.0.tgz"
-  integrity sha512-8DWjguVmVYmuPWI7mhXlmLB6GxKnPjUjZ4Wnnyj3Wh5uqHzgUREHEA1aH92PT84LJLZL8F6dJZk+fIyo9UyXnA==
+"@react-native-firebase/app@^19.0.0":
+  version "19.0.0"
+  resolved "https://registry.npmjs.org/@react-native-firebase/app/-/app-19.0.0.tgz"
+  integrity sha512-QcT4fJQjoEmvmRKDiEsLf5MBAgejlBGCAuAgXT/TBxE8/lrLubhlHVokodQvP0trjcVoA8L+HSEQFX2eIc3BPA==
   dependencies:
-    opencollective-postinstall "^2.0.1"
+    opencollective-postinstall "^2.0.3"
     superstruct "^0.6.2"
-
-"@react-native-firebase/auth@^17.5.0":
-  version "17.5.0"
-  resolved "https://registry.npmjs.org/@react-native-firebase/auth/-/auth-17.5.0.tgz"
-  integrity sha512-iF5Wv7dcDPmxu2om5SkPVGPELAwahAp3izFXjrv6wQAFmOTQ+2rEIDRBFMmS7EZ/qwNodvKK3vgDLEnOxDtTAQ==
-  dependencies:
-    plist "^3.0.5"
-
-"@react-native-firebase/database@^17.5.0":
-  version "17.5.0"
-  resolved "https://registry.npmjs.org/@react-native-firebase/database/-/database-17.5.0.tgz"
-  integrity sha512-THtlYXt6o+YgRR+kphRkuZgG3uoE/TiIpTzEUatGGcp/XYGeZbr77dE/6jbATQz/ORFrE7lsEpJRJm/c4iuQ6g==
 
 "@react-native/assets-registry@~0.73.1", "@react-native/assets-registry@0.73.1":
   version "0.73.1"
@@ -9013,7 +9001,7 @@ open@^8.3.0:
     is-docker "^2.1.1"
     is-wsl "^2.2.0"
 
-opencollective-postinstall@^2.0.1:
+opencollective-postinstall@^2.0.3:
   version "2.0.3"
   resolved "https://registry.npmjs.org/opencollective-postinstall/-/opencollective-postinstall-2.0.3.tgz"
   integrity sha512-8AV/sCtuzUeTo8gQK5qDZzARrulB3egtLzFgteqB2tcT4Mw7B8Kt7JcDHmltjz6FOAHsvTevk70gZEbhM4ZS9Q==
