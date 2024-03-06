@@ -27,14 +27,14 @@ export const Register = () => {
   return (
     <View>
       <TextInput
-        placeholder="email"
+        placeholder="email goes here"
         autoCapitalize="none"
         onChangeText={(text) => setEmail(text)}
       />
       <TextInput
         autoCapitalize="none"
         secureTextEntry={true}
-        placeholder="password"
+        placeholder="password is here!"
         onChangeText={(text) => setPassword(text)}
       />
       <Button title="Register" onPress={register} />
