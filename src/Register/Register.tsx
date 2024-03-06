@@ -1,7 +1,5 @@
 import { createUserWithEmailAndPassword } from 'firebase/auth'
-
 import React, { useState } from 'react'
-
 import { Button, TextInput, View } from 'react-native'
 
 import { auth } from '../../firebaseConfig'

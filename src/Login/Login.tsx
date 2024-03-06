@@ -1,8 +1,10 @@
+import { signInWithEmailAndPassword } from 'firebase/auth'
 import React, { useState } from 'react'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native'
-import { auth } from '../../firebaseConfig'
-import { signInWithEmailAndPassword } from 'firebase/auth'
+
 import { scaleSize } from 'src/Main/components/util'
+
+import { auth } from '../../firebaseConfig'
 
 export const Login = ({ navigation }: any) => {
   const [email, setEmail] = useState('')
@@ -20,7 +22,13 @@ export const Login = ({ navigation }: any) => {
       })
       .catch((error) => {
         if (
-          ['auth/invalid-email', 'auth/wrong-password', 'auth/user-not-found', 'auth/missing-password', 'auth/invalid_credential'].includes(error.code)
+          [
+            'auth/invalid-email',
+            'auth/wrong-password',
+            'auth/user-not-found',
+            'auth/missing-password',
+            'auth/invalid_credential'
+          ].includes(error.code)
         ) {
           setPasswordError('The credentials you provided are incorrect.')
         } else {

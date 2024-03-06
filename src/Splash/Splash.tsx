@@ -1,5 +1,6 @@
 import React from 'react'
 import { TouchableOpacity, StyleSheet, Text, View, Image } from 'react-native'
+
 import { scaleSize } from 'src/Main/components/util'
 
 export const Splash = ({ navigation }: any) => {
@@ -44,7 +45,7 @@ const styles = StyleSheet.create({
   },
   splashtext: {
     color: 'black',
-    fontSize: scaleSize(15),
+    fontSize: scaleSize(15)
   },
   signup: {
     backgroundColor: 'white',
