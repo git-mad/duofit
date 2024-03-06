@@ -2,7 +2,7 @@
 
 0. `git clone xxxx`
 1. `cd duofit`
-2. when you first clone, use `npm ci` instead of `npm install` to install the expo dependencies (i think)
+2. when you first clone, use `npm install` to install the expo dependencies
 3. `npm start`
 
 ## commit messages
